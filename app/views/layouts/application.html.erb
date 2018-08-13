@@ -13,14 +13,23 @@
   <body>
 
    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-      <h5 class="my-0 mr-md-auto font-weight-normal"><%= link_to "Members Only", root_path %></h5>
+      <h5 class="my-0 mr-md-auto font-weight-normal"><%= link_to "Members Only", posts_path %></h5>
       <nav class="my-2 my-md-0 mr-md-3">
         <%= link_to "All Posts", posts_path  %>
-        <%= link_to "New Post", new_post_path %>
       </nav>
-      <%= link_to "Sign Up", new_user_path %>
+      <% if logged_in? %>
+        <nav class="my-2 my-md-0 mr-md-3">
+          <%= link_to "New Post", new_post_path %>
+        </nav>
+        <%= link_to "Log out", logout_path, method: :delete %> 
+      <% else %>
+        <%= link_to "Log in", login_path %>
+      <% end %> 
     </div>
     <div class="container">
+      <% flash.each do |msg_type, msg| %>
+        <p><%= msg %><p>
+      <% end %>
       <%= yield %>
     </div>
   </body>

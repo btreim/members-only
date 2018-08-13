@@ -1,7 +1,13 @@
 <h2><%= @post.title %></h2>
 <p> <%= @post.body %></p>
 <hr>
-<%= link_to "Edit", edit_post_path(@post), class: 'btn btn-default' %>
-<%= link_to "Delete", post_path(@post), method: :delete,
-																				data: {confirm: "Are you sure?"},		
-																				class: 'btn btn-danger' %>
+<% if logged_in? %> 
+	<p><%= @post.author %></p>
+<% end %> 
+
+<% if logged_in? && correct_user(@post.author) %> 
+	<%= link_to "Edit", edit_post_path(@post), class: 'btn btn-default' %>
+	<%= link_to "Delete", post_path(@post), method: :delete,
+																					data: {confirm: "Are you sure?"},		
+																					class: 'btn btn-danger' %>
+<% end %> 
